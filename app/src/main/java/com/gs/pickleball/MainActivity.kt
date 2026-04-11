@@ -1,6 +1,8 @@
 ﻿package com.gs.pickleball
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val viewModel: MainViewModel by viewModels()
 
-    override fun bindingProvider(inflater: android.view.LayoutInflater): ActivityMainBinding {
+    override fun bindingProvider(inflater: LayoutInflater): ActivityMainBinding {
         return ActivityMainBinding.inflate(inflater)
     }
 
@@ -29,6 +31,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             viewBinding.nameInputLayout.error = null
             viewModel.savePlayer(name)
             viewBinding.nameInput.setText("")
+        }
+
+        viewBinding.openMatchButton.setOnClickListener {
+            startActivity(Intent(this, MatchActivity::class.java))
         }
 
         lifecycleScope.launch {

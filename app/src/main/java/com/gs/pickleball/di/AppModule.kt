@@ -3,6 +3,7 @@
 import android.content.Context
 import androidx.room.Room
 import com.gs.pickleball.data.AppDatabase
+import com.gs.pickleball.data.MatchDao
 import com.gs.pickleball.data.PlayerDao
 import dagger.Module
 import dagger.Provides
@@ -17,9 +18,14 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, "pickleball.db").build()
+        return Room.databaseBuilder(context, AppDatabase::class.java, "pickleball.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     fun providePlayerDao(db: AppDatabase): PlayerDao = db.playerDao()
+
+    @Provides
+    fun provideMatchDao(db: AppDatabase): MatchDao = db.matchDao()
 }

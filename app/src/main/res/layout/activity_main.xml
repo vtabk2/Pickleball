@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/titleText"
@@ -44,6 +44,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout"/>
 
+    <Button
+        android:id="@+id/openMatchButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Màn hình trận đấu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saveButton"/>
+
     <TextView
         android:id="@+id/listTitle"
         android:layout_width="0dp"
@@ -53,7 +63,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/saveButton"/>
+        app:layout_constraintTop_toBottomOf="@id/openMatchButton"/>
 
     <TextView
         android:id="@+id/savedList"
