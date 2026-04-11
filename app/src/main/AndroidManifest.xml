@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pickleball">
         <activity
-            android:name=".MatchActivity"
+            android:name=".ui.match.MatchActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

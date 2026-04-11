@@ -1,15 +1,20 @@
-﻿package com.gs.pickleball
+package com.gs.pickleball.ui.main
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.gs.pickleball.ui.main.MainViewModel
 import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMainBinding
 import com.gs.pickleball.ui.base.activity.BaseActivity
+import com.gs.pickleball.ui.match.MatchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,10 +50,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun renderPlayers(players: List<PlayerEntity>) {
+        bindAdapter(viewBinding.nameInput, players.map { it.name })
         viewBinding.savedList.text = if (players.isEmpty()) {
             "(Chưa có dữ liệu)"
         } else {
             players.joinToString("\n") { "- ${it.name}" }
         }
+    }
+
+    private fun bindAdapter(view: AutoCompleteTextView, items: List<String>) {
+        val adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, items)
+        view.setAdapter(adapter)
     }
 }

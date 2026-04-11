@@ -10,4 +10,6 @@ class PlayerRepository @Inject constructor(
     }
 
     suspend fun getAll(): List<PlayerEntity> = playerDao.getAll()
+
+    suspend fun findByName(name: String): PlayerEntity? = playerDao.findByName(name)
 }

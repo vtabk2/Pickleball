@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/matchRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/matchTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:text="Kết quả trận đấu"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -21,6 +22,7 @@
         android:id="@+id/matchTypeGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +47,7 @@
         android:id="@+id/player1Layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:hint="Người chơi 1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +57,7 @@
         <AutoCompleteTextView
             android:id="@+id/player1Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPersonName"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,6 +65,7 @@
         android:id="@+id/player2Layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="Người chơi 2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +75,7 @@
         <AutoCompleteTextView
             android:id="@+id/player2Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPersonName"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,6 +83,7 @@
         android:id="@+id/player3Layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="Người chơi 3"
         android:visibility="gone"
@@ -89,7 +94,7 @@
         <AutoCompleteTextView
             android:id="@+id/player3Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPersonName"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,6 +102,7 @@
         android:id="@+id/player4Layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="Người chơi 4"
         android:visibility="gone"
@@ -107,7 +113,7 @@
         <AutoCompleteTextView
             android:id="@+id/player4Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPersonName"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,6 +121,7 @@
         android:id="@+id/scoreTeamALayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:hint="Điểm đội A"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,6 +139,7 @@
         android:id="@+id/scoreTeamBLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:hint="Điểm đội B"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,6 +157,7 @@
         android:id="@+id/saveMatchButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:text="Lưu trận đấu"
         app:layout_constraintEnd_toEndOf="parent"
@@ -159,6 +168,7 @@
         android:id="@+id/matchListTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
         android:text="Danh sách trận đấu"
         android:textStyle="bold"
@@ -170,11 +180,11 @@
         android:id="@+id/matchList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:text="(Chưa có trận đấu)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/matchListTitle"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

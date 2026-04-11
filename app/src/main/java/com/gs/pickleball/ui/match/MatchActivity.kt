@@ -1,4 +1,4 @@
-﻿package com.gs.pickleball
+package com.gs.pickleball.ui.match
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.gs.pickleball.ui.match.MatchViewModel
+import com.gs.pickleball.R
 import com.gs.pickleball.data.MatchEntity
 import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMatchBinding
@@ -89,34 +91,15 @@ class MatchActivity : BaseActivity<ActivityMatchBinding>() {
                 return@setOnClickListener
             }
 
-            val p1Id = findPlayerId(p1) ?: return@setOnClickListener.also {
-                viewBinding.player1Layout.error = "Người chơi không tồn tại"
-            }
-            val p2Id = findPlayerId(p2) ?: return@setOnClickListener.also {
-                viewBinding.player2Layout.error = "Người chơi không tồn tại"
-            }
-            val p3Id = if (isFour) findPlayerId(p3) else null
-            if (isFour && p3Id == null) {
-                viewBinding.player3Layout.error = "Người chơi không tồn tại"
-                return@setOnClickListener
-            }
-            val p4Id = if (isFour) findPlayerId(p4) else null
-            if (isFour && p4Id == null) {
-                viewBinding.player4Layout.error = "Người chơi không tồn tại"
-                return@setOnClickListener
-            }
-
-            val match = MatchEntity(
-                matchType = if (isFour) 4 else 2,
-                player1Id = p1Id,
-                player2Id = p2Id,
-                player3Id = p3Id,
-                player4Id = p4Id,
-                scoreTeamA = scoreA,
-                scoreTeamB = scoreB
+            resolvePlayersAndSave(
+                isFour = isFour,
+                p1 = p1,
+                p2 = p2,
+                p3 = p3,
+                p4 = p4,
+                scoreA = scoreA,
+                scoreB = scoreB
             )
-            viewModel.saveMatch(match)
-            clearInputs()
         }
     }
 
@@ -170,7 +153,65 @@ class MatchActivity : BaseActivity<ActivityMatchBinding>() {
         viewBinding.scoreTeamB.setText("")
     }
 
-    private fun findPlayerId(name: String): Long? {
-        return players.firstOrNull { it.name.equals(name, ignoreCase = true) }?.id
+    private fun resolvePlayersAndSave(
+        isFour: Boolean,
+        p1: String,
+        p2: String,
+        p3: String,
+        p4: String,
+        scoreA: Int,
+        scoreB: Int
+    ) {
+        viewModel.findOrCreatePlayer(p1) { player1 ->
+            viewModel.findOrCreatePlayer(p2) { player2 ->
+                if (isFour) {
+                    viewModel.findOrCreatePlayer(p3) { player3 ->
+                        viewModel.findOrCreatePlayer(p4) { player4 ->
+                            saveMatchWithPlayers(
+                                isFour,
+                                player1.id,
+                                player2.id,
+                                player3.id,
+                                player4.id,
+                                scoreA,
+                                scoreB
+                            )
+                        }
+                    }
+                } else {
+                    saveMatchWithPlayers(
+                        isFour,
+                        player1.id,
+                        player2.id,
+                        null,
+                        null,
+                        scoreA,
+                        scoreB
+                    )
+                }
+            }
+        }
+    }
+
+    private fun saveMatchWithPlayers(
+        isFour: Boolean,
+        p1Id: Long,
+        p2Id: Long,
+        p3Id: Long?,
+        p4Id: Long?,
+        scoreA: Int,
+        scoreB: Int
+    ) {
+        val match = MatchEntity(
+            matchType = if (isFour) 4 else 2,
+            player1Id = p1Id,
+            player2Id = p2Id,
+            player3Id = p3Id,
+            player4Id = p4Id,
+            scoreTeamA = scoreA,
+            scoreTeamB = scoreB
+        )
+        viewModel.saveMatch(match)
+        runOnUiThread { clearInputs() }
     }
 }

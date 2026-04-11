@@ -1,10 +1,9 @@
-﻿package com.gs.pickleball
+package com.gs.pickleball.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gs.pickleball.data.MatchEntity
-import com.gs.pickleball.data.MatchRepository
 import com.gs.pickleball.data.PlayerEntity
+import com.gs.pickleball.data.PlayerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,30 +13,32 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MatchViewModel @Inject constructor(
-    private val repository: MatchRepository
+class MainViewModel @Inject constructor(
+    private val repository: PlayerRepository
 ) : ViewModel() {
     private val _players = MutableStateFlow<List<PlayerEntity>>(emptyList())
     val players: StateFlow<List<PlayerEntity>> = _players.asStateFlow()
 
-    private val _matches = MutableStateFlow<List<MatchEntity>>(emptyList())
-    val matches: StateFlow<List<MatchEntity>> = _matches.asStateFlow()
-
     init {
-        refreshAll()
+        refresh()
     }
 
-    fun refreshAll() {
+    fun savePlayer(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _players.value = repository.getPlayers()
-            _matches.value = repository.getMatches()
+            val trimmed = name.trim()
+            if (trimmed.isNotEmpty()) {
+                val existing = repository.findByName(trimmed)
+                if (existing == null) {
+                    repository.insert(trimmed)
+                }
+                _players.value = repository.getAll()
+            }
         }
     }
 
-    fun saveMatch(match: MatchEntity) {
+    fun refresh() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insert(match)
-            _matches.value = repository.getMatches()
+            _players.value = repository.getAll()
         }
     }
 }
