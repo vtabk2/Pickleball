@@ -22,16 +22,31 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class MatchListActivity : BaseActivity<ActivityMatchListBinding>() {
+    companion object {
+        const val EXTRA_PLAYER_ID = "extra_player_id"
+        const val EXTRA_PLAYER_NAME = "extra_player_name"
+    }
+
     private val viewModel: MatchViewModel by viewModels()
     private var matches: List<com.gs.pickleball.data.MatchEntity> = emptyList()
     private var players: Map<Long, com.gs.pickleball.data.PlayerEntity> = emptyMap()
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+    private var filterPlayerId: Long? = null
+    private var filterPlayerName: String? = null
 
     override fun bindingProvider(inflater: LayoutInflater): ActivityMatchListBinding {
         return ActivityMatchListBinding.inflate(inflater)
     }
 
     override fun initViews(savedInstanceState: Bundle?) {
+        filterPlayerId = intent.getLongExtra(EXTRA_PLAYER_ID, -1L).takeIf { it > 0 }
+        filterPlayerName = intent.getStringExtra(EXTRA_PLAYER_NAME)
+        if (filterPlayerId != null) {
+            val titleName = filterPlayerName?.takeIf { it.isNotBlank() } ?: "Player #$filterPlayerId"
+            viewBinding.matchListTitle.text = getString(R.string.title_matches_of, titleName)
+            viewModel.refreshForPlayer(filterPlayerId!!)
+        }
+
         viewBinding.matchListView.setOnItemClickListener { _, _, position, _ ->
             val match = matches.getOrNull(position) ?: return@setOnItemClickListener
             val intent = Intent(this, MatchDetailActivity::class.java)

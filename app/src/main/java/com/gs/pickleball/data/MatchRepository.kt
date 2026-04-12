@@ -22,6 +22,8 @@ class MatchRepository @Inject constructor(
 
     suspend fun getMatches(): List<MatchEntity> = matchDao.getAll()
 
+    suspend fun getMatchesByPlayerId(playerId: Long): List<MatchEntity> = matchDao.getByPlayerId(playerId)
+
     suspend fun getMatchById(id: Long): MatchEntity? = matchDao.getById(id)
 
     suspend fun getPlayersByIds(ids: List<Long>): List<PlayerEntity> = playerDao.getByIds(ids)

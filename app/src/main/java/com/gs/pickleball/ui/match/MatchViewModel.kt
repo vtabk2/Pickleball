@@ -34,6 +34,13 @@ class MatchViewModel @Inject constructor(
         }
     }
 
+    fun refreshForPlayer(playerId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _players.value = repository.getPlayers()
+            _matches.value = repository.getMatchesByPlayerId(playerId)
+        }
+    }
+
     fun saveMatch(match: MatchEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insert(match)

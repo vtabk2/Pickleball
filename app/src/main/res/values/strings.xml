@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Pickleball</string>
+    <string name="title_players">Players</string>
+    <string name="action_players">Players</string>
+    <string name="action_match_screen">Match Screen</string>
+    <string name="action_match_list">Match List</string>
+    <string name="hint_player_name">Player name</string>
+    <string name="action_save_player">Save player</string>
+    <string name="label_saved_players">Saved players</string>
+    <string name="empty_players">(No players)</string>
+    <string name="error_player_name_required">Please enter a name</string>
+    <string name="title_matches_of">Matches of %1$s</string>
 </resources>

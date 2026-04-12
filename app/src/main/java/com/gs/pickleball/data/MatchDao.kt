@@ -12,6 +12,16 @@ interface MatchDao {
     @Query("SELECT * FROM matches ORDER BY id DESC")
     suspend fun getAll(): List<MatchEntity>
 
+    @Query(
+        "SELECT * FROM matches " +
+            "WHERE player1Id = :playerId " +
+            "OR player2Id = :playerId " +
+            "OR player3Id = :playerId " +
+            "OR player4Id = :playerId " +
+            "ORDER BY id DESC"
+    )
+    suspend fun getByPlayerId(playerId: Long): List<MatchEntity>
+
     @Query("SELECT * FROM matches WHERE id = :id LIMIT 1")
     suspend fun getById(id: Long): MatchEntity?
 }
