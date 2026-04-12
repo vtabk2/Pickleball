@@ -1,4 +1,4 @@
-package com.gs.pickleball.extensions
+package com.gs.pickleball.utils.extensions
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity

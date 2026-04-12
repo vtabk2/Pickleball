@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RippleImageView">
+        <attr name="riv_padding_ripple" format="dimension"/>
+        <attr name="riv_icon_ripple" format="reference"/>
+        <attr name="riv_ripple_color" format="reference|color"/>
+        <attr name="riv_circle_ripple" format="reference|boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CoreToolbarView">
+        <attr name="ctv_ic_back_show" format="boolean"/>
+        <attr name="ctv_ic_back_icon" format="reference"/>
+        <attr name="ctv_ic_back_enable" format="boolean"/>
+        <attr name="ctv_ic_back_margin_start" format="dimension"/>
+
+        <attr name="ctv_tv_title" format="reference|string"/>
+        <attr name="ctv_tv_title_show" format="reference|boolean"/>
+        <attr name="ctv_tv_title_text_color" format="reference|color"/>
+
+        <attr name="ctv_ic_up_down_up_show" format="boolean"/>
+        <attr name="ctv_ic_up_down_up_icon" format="reference"/>
+        <attr name="ctv_ic_up_down_down_icon" format="reference"/>
+
+        <attr name="ctv_tv_action_show" format="boolean"/>
+        <attr name="ctv_tv_action_enable" format="boolean"/>
+        <attr name="ctv_tv_action_text" format="reference"/>
+        <attr name="ctv_tv_action_background" format="reference"/>
+        <attr name="ctv_tv_action_background_show" format="boolean"/>
+        <attr name="ctv_tv_action_text_color" format="reference|color"/>
+        <attr name="ctv_tv_action_text_size" format="dimension"/>
+        <attr name="ctv_tv_action_margin_end" format="dimension"/>
+
+        <attr name="ctv_ic_action_show" format="boolean"/>
+        <attr name="ctv_ic_action_icon" format="reference"/>
+        <attr name="ctv_ic_action_enable" format="boolean"/>
+        <attr name="ctv_ic_action_margin_end" format="dimension"/>
+
+        <attr name="ctv_ic_action_extra_show" format="boolean"/>
+        <attr name="ctv_ic_action_extra_icon" format="reference"/>
+        <attr name="ctv_ic_action_extra_enable" format="boolean"/>
+    </declare-styleable>
+</resources>

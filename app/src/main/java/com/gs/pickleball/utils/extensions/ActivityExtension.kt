@@ -1,4 +1,4 @@
-package com.gs.pickleball.extensions
+package com.gs.pickleball.utils.extensions
 
 import android.app.Activity
 import android.os.Build

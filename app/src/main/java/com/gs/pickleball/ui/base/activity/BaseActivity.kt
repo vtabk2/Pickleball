@@ -26,10 +26,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding
-import com.gs.pickleball.extensions.getCurrentLanguageCode
-import com.gs.pickleball.extensions.hideNavigationBar
-import com.gs.pickleball.extensions.showNavigationBar
-import com.gs.pickleball.extensions.viewBinding
+import com.gs.pickleball.utils.extensions.getCurrentLanguageCode
+import com.gs.pickleball.utils.extensions.hideNavigationBar
+import com.gs.pickleball.utils.extensions.showNavigationBar
+import com.gs.pickleball.utils.extensions.viewBinding
 import com.gs.pickleball.ui.base.viewmodel.InsetsViewModel
 import com.gs.pickleball.ui.base.viewmodel.KeyboardChangeViewModel
 import com.gs.pickleball.ui.customviews.keyboard.KeyboardHeightProviderApi30Below
