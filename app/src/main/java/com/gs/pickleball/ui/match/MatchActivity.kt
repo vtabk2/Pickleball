@@ -1,5 +1,6 @@
 package com.gs.pickleball.ui.match
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +52,7 @@ class MatchActivity : BaseActivity<ActivityMatchBinding>() {
             viewBinding.player3Layout.visibility = if (isFour) View.VISIBLE else View.GONE
             viewBinding.player4Layout.visibility = if (isFour) View.VISIBLE else View.GONE
         }
-        viewBinding.matchTypeTwo.isChecked = true
+        viewBinding.matchTypeFour.isChecked = true
     }
 
     private fun setupSave() {
@@ -99,6 +100,10 @@ class MatchActivity : BaseActivity<ActivityMatchBinding>() {
                 scoreA = scoreA,
                 scoreB = scoreB
             )
+        }
+
+        viewBinding.openMatchButton.setOnClickListener {
+            startActivity(Intent(this, MatchActivity::class.java))
         }
     }
 

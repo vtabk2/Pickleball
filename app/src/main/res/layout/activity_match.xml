@@ -168,6 +168,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scoreTeamBLayout"/>
 
+    <Button
+        android:id="@+id/openMatchButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/action_match_screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saveMatchButton"/>
+
     <TextView
         android:id="@+id/matchListTitle"
         android:layout_width="0dp"
@@ -178,7 +189,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/saveMatchButton"/>
+        app:layout_constraintTop_toBottomOf="@id/openMatchButton"/>
 
     <TextView
         android:id="@+id/matchList"
