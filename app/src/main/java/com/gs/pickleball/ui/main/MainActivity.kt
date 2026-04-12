@@ -1,4 +1,4 @@
-package com.gs.pickleball.ui.main
+﻿package com.gs.pickleball.ui.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.gs.pickleball.databinding.ActivityMainBinding
 import com.gs.pickleball.ui.base.activity.BaseActivity
 import com.gs.pickleball.ui.common.AccentInsensitiveAdapter
 import com.gs.pickleball.ui.match.MatchActivity
+import com.gs.pickleball.ui.match.MatchListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,6 +39,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         viewBinding.openMatchButton.setOnClickListener {
             startActivity(Intent(this, MatchActivity::class.java))
+        }
+
+        viewBinding.openMatchListButton.setOnClickListener {
+            startActivity(Intent(this, MatchListActivity::class.java))
         }
 
         lifecycleScope.launch {

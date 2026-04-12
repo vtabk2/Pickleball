@@ -9,10 +9,11 @@ class MatchRepository @Inject constructor(
     suspend fun getPlayers(): List<PlayerEntity> = playerDao.getAll()
 
     suspend fun findOrCreatePlayer(name: String): PlayerEntity {
-        val existing = playerDao.findByName(name)
+        val trimmed = name.trim()
+        val existing = playerDao.findByName(trimmed)
         if (existing != null) return existing
-        val id = playerDao.insert(PlayerEntity(name = name.trim()))
-        return PlayerEntity(id = id, name = name.trim())
+        val id = playerDao.insert(PlayerEntity(name = trimmed))
+        return PlayerEntity(id = id, name = trimmed)
     }
 
     suspend fun insert(match: MatchEntity) {
@@ -20,4 +21,8 @@ class MatchRepository @Inject constructor(
     }
 
     suspend fun getMatches(): List<MatchEntity> = matchDao.getAll()
+
+    suspend fun getMatchById(id: Long): MatchEntity? = matchDao.getById(id)
+
+    suspend fun getPlayersByIds(ids: List<Long>): List<PlayerEntity> = playerDao.getByIds(ids)
 }

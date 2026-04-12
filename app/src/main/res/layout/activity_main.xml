@@ -33,9 +33,8 @@
         <AutoCompleteTextView
             android:id="@+id/nameInput"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:inputType="textPersonName"
-            android:paddingHorizontal="16dp"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -60,6 +59,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/saveButton"/>
 
+    <Button
+        android:id="@+id/openMatchListButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Danh sách trận đấu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/openMatchButton"/>
+
     <TextView
         android:id="@+id/listTitle"
         android:layout_width="0dp"
@@ -70,7 +80,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/openMatchButton"/>
+        app:layout_constraintTop_toBottomOf="@id/openMatchListButton"/>
 
     <TextView
         android:id="@+id/savedList"

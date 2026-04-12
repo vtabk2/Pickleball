@@ -14,4 +14,7 @@ interface PlayerDao {
 
     @Query("SELECT * FROM players WHERE name = :name COLLATE NOCASE LIMIT 1")
     suspend fun findByName(name: String): PlayerEntity?
+
+    @Query("SELECT * FROM players WHERE id IN (:ids)")
+    suspend fun getByIds(ids: List<Long>): List<PlayerEntity>
 }
