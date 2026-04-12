@@ -9,7 +9,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.gs.pickleball.data.MatchEntity
 import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMatchDetailBinding
-import com.gs.pickleball.ui.base.activity.BaseActivity
+import com.gs.pickleball.ui.base.activity.CoreActivity
+import com.gs.pickleball.ui.customviews.toolbar.CoreToolbarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -17,7 +18,7 @@ import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
-class MatchDetailActivity : BaseActivity<ActivityMatchDetailBinding>() {
+class MatchDetailActivity : CoreActivity<ActivityMatchDetailBinding>() {
     private val viewModel: MatchDetailViewModel by viewModels()
 
     override fun bindingProvider(inflater: LayoutInflater): ActivityMatchDetailBinding {
@@ -27,7 +28,7 @@ class MatchDetailActivity : BaseActivity<ActivityMatchDetailBinding>() {
     override fun initViews(savedInstanceState: Bundle?) {
         val matchId = intent.getLongExtra(EXTRA_MATCH_ID, -1L)
         if (matchId <= 0L) {
-            viewBinding.detailTitle.text = "Không tìm thấy trận đấu"
+            viewBinding.toolbar.title = "Không tìm thấy trận đấu"
             return
         }
 
@@ -49,11 +50,17 @@ class MatchDetailActivity : BaseActivity<ActivityMatchDetailBinding>() {
         }
 
         viewModel.load(matchId)
+
+        viewBinding.toolbar.onToolbarListener = object : CoreToolbarView.OnToolbarListener {
+            override fun onBack() {
+                setupAfterOnBackPressed()
+            }
+        }
     }
 
     private fun render(match: MatchEntity?, players: List<PlayerEntity>) {
         if (match == null) {
-            viewBinding.detailTitle.text = "Không tìm thấy trận đấu"
+            viewBinding.toolbar.title = "Không tìm thấy trận đấu"
             return
         }
         val playersById = players.associateBy { it.id }
@@ -74,7 +81,7 @@ class MatchDetailActivity : BaseActivity<ActivityMatchDetailBinding>() {
         }
         val dateText = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(match.createdAt))
 
-        viewBinding.detailTitle.text = "Chi tiết trận đấu"
+        viewBinding.toolbar.title = "Chi tiết trận đấu"
         viewBinding.detailType.text = if (isFour) "Thể thức: 4 người" else "Thể thức: 2 người"
         viewBinding.detailTeams.text = "$teamA vs $teamB"
         viewBinding.detailScore.text = "Kết quả: ${match.scoreTeamA} - ${match.scoreTeamB}"

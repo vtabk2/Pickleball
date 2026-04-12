@@ -13,13 +13,13 @@ import com.gs.pickleball.R
 import com.gs.pickleball.data.MatchEntity
 import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMatchBinding
-import com.gs.pickleball.ui.base.activity.BaseActivity
+import com.gs.pickleball.ui.base.activity.CoreActivity
 import com.gs.pickleball.ui.common.AccentInsensitiveAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MatchActivity : BaseActivity<ActivityMatchBinding>() {
+class MatchActivity : CoreActivity<ActivityMatchBinding>() {
     private val viewModel: MatchViewModel by viewModels()
     private var players: List<PlayerEntity> = emptyList()
 

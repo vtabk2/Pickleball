@@ -5,16 +5,11 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <TextView
-        android:id="@+id/matchListTitle"
-        android:layout_width="0dp"
+    <com.gs.pickleball.ui.customviews.toolbar.CoreToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="Danh sách trận đấu"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:ctv_tv_title="Danh sách trận đấu"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
@@ -26,7 +21,7 @@
         android:text="(Chưa có trận đấu)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/matchListTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
     <ListView
         android:id="@+id/matchListView"

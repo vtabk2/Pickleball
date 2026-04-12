@@ -13,7 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gs.pickleball.R
 import com.gs.pickleball.databinding.ActivityMatchListBinding
-import com.gs.pickleball.ui.base.activity.BaseActivity
+import com.gs.pickleball.ui.base.activity.CoreActivity
+import com.gs.pickleball.ui.customviews.toolbar.CoreToolbarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -21,7 +22,7 @@ import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
-class MatchListActivity : BaseActivity<ActivityMatchListBinding>() {
+class MatchListActivity : CoreActivity<ActivityMatchListBinding>() {
     companion object {
         const val EXTRA_PLAYER_ID = "extra_player_id"
         const val EXTRA_PLAYER_NAME = "extra_player_name"
@@ -43,7 +44,7 @@ class MatchListActivity : BaseActivity<ActivityMatchListBinding>() {
         filterPlayerName = intent.getStringExtra(EXTRA_PLAYER_NAME)
         if (filterPlayerId != null) {
             val titleName = filterPlayerName?.takeIf { it.isNotBlank() } ?: "Player #$filterPlayerId"
-            viewBinding.matchListTitle.text = getString(R.string.title_matches_of, titleName)
+            viewBinding.toolbar.title = getString(R.string.title_matches_of, titleName)
             viewModel.refreshForPlayer(filterPlayerId!!)
         }
 
@@ -52,6 +53,12 @@ class MatchListActivity : BaseActivity<ActivityMatchListBinding>() {
             val intent = Intent(this, MatchDetailActivity::class.java)
             intent.putExtra(MatchDetailActivity.EXTRA_MATCH_ID, match.id)
             startActivity(intent)
+        }
+
+        viewBinding.toolbar.onToolbarListener = object : CoreToolbarView.OnToolbarListener {
+            override fun onBack() {
+                setupAfterOnBackPressed()
+            }
         }
 
         lifecycleScope.launch {

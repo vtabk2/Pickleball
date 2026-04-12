@@ -4,21 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AutoCompleteTextView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gs.pickleball.databinding.ActivityPlayerBinding
-import com.gs.pickleball.ui.base.activity.BaseActivity
+import com.gs.pickleball.ui.base.activity.CoreActivity
 import com.gs.pickleball.ui.common.AccentInsensitiveAdapter
 import com.gs.pickleball.ui.match.MatchListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PlayerActivity : BaseActivity<ActivityPlayerBinding>() {
+class PlayerActivity : CoreActivity<ActivityPlayerBinding>() {
     private val viewModel: PlayerViewModel by viewModels()
     private var players: List<com.gs.pickleball.data.PlayerEntity> = emptyList()
 
