@@ -3,18 +3,17 @@ package com.gs.pickleball.ui.match
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.gs.pickleball.ui.match.MatchViewModel
 import com.gs.pickleball.R
 import com.gs.pickleball.data.MatchEntity
 import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMatchBinding
 import com.gs.pickleball.ui.base.activity.BaseActivity
+import com.gs.pickleball.ui.common.AccentInsensitiveAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -112,7 +111,8 @@ class MatchActivity : BaseActivity<ActivityMatchBinding>() {
     }
 
     private fun bindAdapter(view: AutoCompleteTextView, items: List<String>) {
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        view.threshold = 1
+        val adapter = AccentInsensitiveAdapter(this, items)
         view.setAdapter(adapter)
     }
 
