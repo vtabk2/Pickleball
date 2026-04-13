@@ -12,6 +12,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gs.pickleball.R
+import com.gs.pickleball.data.MatchEntity
+import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMatchListBinding
 import com.gs.pickleball.ui.base.activity.CoreActivity
 import com.gs.pickleball.ui.customviews.toolbar.CoreToolbarView
@@ -29,8 +31,8 @@ class MatchListActivity : CoreActivity<ActivityMatchListBinding>() {
     }
 
     private val viewModel: MatchViewModel by viewModels()
-    private var matches: List<com.gs.pickleball.data.MatchEntity> = emptyList()
-    private var players: Map<Long, com.gs.pickleball.data.PlayerEntity> = emptyMap()
+    private var matches: List<MatchEntity> = emptyList()
+    private var players: Map<Long, PlayerEntity> = emptyMap()
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     private var filterPlayerId: Long? = null
     private var filterPlayerName: String? = null
@@ -43,8 +45,8 @@ class MatchListActivity : CoreActivity<ActivityMatchListBinding>() {
         filterPlayerId = intent.getLongExtra(EXTRA_PLAYER_ID, -1L).takeIf { it > 0 }
         filterPlayerName = intent.getStringExtra(EXTRA_PLAYER_NAME)
         if (filterPlayerId != null) {
-            val titleName = filterPlayerName?.takeIf { it.isNotBlank() } ?: "Player #$filterPlayerId"
-            viewBinding.toolbar.title = getString(R.string.title_matches_of, titleName)
+            val titleName = filterPlayerName?.takeIf { it.isNotBlank() } ?: (getString(R.string.text_player) + " #" + filterPlayerId)
+            viewBinding.toolbar.title = getString(R.string.title_matches_of) + " " + titleName
             viewModel.refreshForPlayer(filterPlayerId!!)
         }
 
@@ -88,8 +90,8 @@ class MatchListActivity : CoreActivity<ActivityMatchListBinding>() {
         viewBinding.emptyText.visibility = View.GONE
 
         val items = matches.map { match ->
-            val p1 = players[match.player1Id]?.name ?: "#${match.player1Id}"
-            val p2 = players[match.player2Id]?.name ?: "#${match.player2Id}"
+            val p1 = players[match.player1Id]?.name ?: fallbackPlayerName(match.player1Id)
+            val p2 = players[match.player2Id]?.name ?: fallbackPlayerName(match.player2Id)
             val title = if (match.matchType == 2) {
                 "$p1 vs $p2"
             } else {
@@ -98,14 +100,13 @@ class MatchListActivity : CoreActivity<ActivityMatchListBinding>() {
                 "$p1 + $p2 vs $p3 + $p4"
             }
             val dateText = dateFormat.format(Date(match.createdAt))
-            val subtitle = "Kết quả: ${match.scoreTeamA}-${match.scoreTeamB} • $dateText"
+            val subtitle = getString(R.string.label_result_prefix) + " " + match.scoreTeamA + "-" + match.scoreTeamB + " • " + dateText
             ListItem(title, subtitle)
         }
 
         val adapter = object : ArrayAdapter<ListItem>(this, R.layout.item_match_list, items) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = convertView
-                    ?: layoutInflater.inflate(R.layout.item_match_list, parent, false)
+                val view = convertView ?: layoutInflater.inflate(R.layout.item_match_list, parent, false)
                 val item = getItem(position) ?: return view
                 view.findViewById<TextView>(R.id.itemTitle).text = item.title
                 view.findViewById<TextView>(R.id.itemSubtitle).text = item.subtitle
@@ -114,6 +115,8 @@ class MatchListActivity : CoreActivity<ActivityMatchListBinding>() {
         }
         viewBinding.matchListView.adapter = adapter
     }
+
+    private fun fallbackPlayerName(playerId: Long): String = "#$playerId"
 
     private data class ListItem(
         val title: String,

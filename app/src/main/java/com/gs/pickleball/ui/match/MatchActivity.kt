@@ -1,4 +1,4 @@
-package com.gs.pickleball.ui.match
+﻿package com.gs.pickleball.ui.match
 
 import android.content.Intent
 import android.os.Bundle
@@ -67,27 +67,27 @@ class MatchActivity : CoreActivity<ActivityMatchBinding>() {
             val sB = viewBinding.scoreTeamB.text?.toString()?.trim().orEmpty()
 
             if (p1.isBlank()) {
-                viewBinding.player1Layout.error = "Chọn người chơi 1"
+                viewBinding.player1Layout.error = getString(R.string.error_select_player_1)
                 return@setOnClickListener
             }
             if (p2.isBlank()) {
-                viewBinding.player2Layout.error = "Chọn người chơi 2"
+                viewBinding.player2Layout.error = getString(R.string.error_select_player_2)
                 return@setOnClickListener
             }
             if (isFour && p3.isBlank()) {
-                viewBinding.player3Layout.error = "Chọn người chơi 3"
+                viewBinding.player3Layout.error = getString(R.string.error_select_player_3)
                 return@setOnClickListener
             }
             if (isFour && p4.isBlank()) {
-                viewBinding.player4Layout.error = "Chọn người chơi 4"
+                viewBinding.player4Layout.error = getString(R.string.error_select_player_4)
                 return@setOnClickListener
             }
             val scoreA = sA.toIntOrNull() ?: run {
-                viewBinding.scoreTeamALayout.error = "Nhập điểm đội A"
+                viewBinding.scoreTeamALayout.error = getString(R.string.error_enter_team_a_score)
                 return@setOnClickListener
             }
             val scoreB = sB.toIntOrNull() ?: run {
-                viewBinding.scoreTeamBLayout.error = "Nhập điểm đội B"
+                viewBinding.scoreTeamBLayout.error = getString(R.string.error_enter_team_b_score)
                 return@setOnClickListener
             }
 
@@ -123,19 +123,20 @@ class MatchActivity : CoreActivity<ActivityMatchBinding>() {
 
     private fun renderMatches(matches: List<MatchEntity>) {
         viewBinding.matchList.text = if (matches.isEmpty()) {
-            "(Chưa có trận đấu)"
+            getString(R.string.empty_matches)
         } else {
             val playersById = players.associateBy { it.id }
             matches.joinToString("\n\n") { match ->
-                val p1 = playersById[match.player1Id]?.name ?: "#${match.player1Id}"
-                val p2 = playersById[match.player2Id]?.name ?: "#${match.player2Id}"
-                if (match.matchType == 2) {
-                    "$p1 vs $p2\nKết quả: ${match.scoreTeamA} - ${match.scoreTeamB}"
+                val p1 = playersById[match.player1Id]?.name ?: fallbackPlayerName(match.player1Id)
+                val p2 = playersById[match.player2Id]?.name ?: fallbackPlayerName(match.player2Id)
+                val teams = if (match.matchType == 2) {
+                    joinTwoTeams(p1, p2)
                 } else {
                     val p3 = match.player3Id?.let { playersById[it]?.name } ?: "?"
                     val p4 = match.player4Id?.let { playersById[it]?.name } ?: "?"
-                    "$p1 + $p2 vs $p3 + $p4\nKết quả: ${match.scoreTeamA} - ${match.scoreTeamB}"
+                    joinFourTeams(p1, p2, p3, p4)
                 }
+                teams + "\n" + buildResultText(match.scoreTeamA, match.scoreTeamB)
             }
         }
     }
@@ -150,12 +151,12 @@ class MatchActivity : CoreActivity<ActivityMatchBinding>() {
     }
 
     private fun clearInputs() {
-        viewBinding.player1Input.setText("")
-        viewBinding.player2Input.setText("")
-        viewBinding.player3Input.setText("")
-        viewBinding.player4Input.setText("")
-        viewBinding.scoreTeamA.setText("")
-        viewBinding.scoreTeamB.setText("")
+        viewBinding.player1Input.text?.clear()
+        viewBinding.player2Input.text?.clear()
+        viewBinding.player3Input.text?.clear()
+        viewBinding.player4Input.text?.clear()
+        viewBinding.scoreTeamA.text?.clear()
+        viewBinding.scoreTeamB.text?.clear()
     }
 
     private fun resolvePlayersAndSave(
@@ -218,5 +219,19 @@ class MatchActivity : CoreActivity<ActivityMatchBinding>() {
         )
         viewModel.saveMatch(match)
         runOnUiThread { clearInputs() }
+    }
+
+    private fun fallbackPlayerName(playerId: Long): String = "#$playerId"
+
+    private fun joinTwoTeams(player1: String, player2: String): String {
+        return "$player1 vs $player2"
+    }
+
+    private fun joinFourTeams(player1: String, player2: String, player3: String, player4: String): String {
+        return "$player1 + $player2 vs $player3 + $player4"
+    }
+
+    private fun buildResultText(scoreTeamA: Int, scoreTeamB: Int): String {
+        return getString(R.string.label_result_prefix) + " " + scoreTeamA + " - " + scoreTeamB
     }
 }

@@ -1,7 +1,8 @@
-<resources>
+﻿<resources>
     <string name="app_name">Pickleball</string>
     <string name="title_players">Players</string>
     <string name="action_players">Players</string>
+    <string name="text_player">Player</string>
     <string name="action_match_screen">Match Screen</string>
     <string name="action_match_list">Match List</string>
     <string name="hint_player_name">Player name</string>
@@ -9,5 +10,33 @@
     <string name="label_saved_players">Saved players</string>
     <string name="empty_players">(No players)</string>
     <string name="error_player_name_required">Please enter a name</string>
-    <string name="title_matches_of">Matches of %1$s</string>
+    <string name="title_matches_of">Matches of</string>
+    <string name="title_match_results">Match Results</string>
+    <string name="match_type_two_players">2 players</string>
+    <string name="match_type_four_players">4 players</string>
+    <string name="hint_player_1">Player 1</string>
+    <string name="hint_player_2">Player 2</string>
+    <string name="hint_player_3">Player 3</string>
+    <string name="hint_player_4">Player 4</string>
+    <string name="hint_team_a_score">Team A score</string>
+    <string name="hint_team_b_score">Team B score</string>
+    <string name="action_save_match">Save match</string>
+    <string name="label_match_list">Match list</string>
+    <string name="empty_matches">(No matches)</string>
+    <string name="title_match_details">Match details</string>
+    <string name="message_match_not_found">Match not found</string>
+    <string name="label_format">Format:</string>
+    <string name="placeholder_teams">Team A vs Team B</string>
+    <string name="label_result">Result:</string>
+    <string name="label_match_date">Match date:</string>
+    <string name="item_match">Match</string>
+    <string name="item_details">Details</string>
+    <string name="error_select_player_1">Select player 1</string>
+    <string name="error_select_player_2">Select player 2</string>
+    <string name="error_select_player_3">Select player 3</string>
+    <string name="error_select_player_4">Select player 4</string>
+    <string name="error_enter_team_a_score">Enter Team A score</string>
+    <string name="error_enter_team_b_score">Enter Team B score</string>
+    <string name="label_result_prefix">Result:</string>
+    <string name="label_match_date_prefix">Match date:</string>
 </resources>

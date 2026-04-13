@@ -1,11 +1,13 @@
 ﻿package com.gs.pickleball.ui.match
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.gs.pickleball.R
 import com.gs.pickleball.data.MatchEntity
 import com.gs.pickleball.data.PlayerEntity
 import com.gs.pickleball.databinding.ActivityMatchDetailBinding
@@ -28,7 +30,7 @@ class MatchDetailActivity : CoreActivity<ActivityMatchDetailBinding>() {
     override fun initViews(savedInstanceState: Bundle?) {
         val matchId = intent.getLongExtra(EXTRA_MATCH_ID, -1L)
         if (matchId <= 0L) {
-            viewBinding.toolbar.title = "Không tìm thấy trận đấu"
+            viewBinding.toolbar.title = getString(R.string.message_match_not_found)
             return
         }
 
@@ -58,14 +60,15 @@ class MatchDetailActivity : CoreActivity<ActivityMatchDetailBinding>() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun render(match: MatchEntity?, players: List<PlayerEntity>) {
         if (match == null) {
-            viewBinding.toolbar.title = "Không tìm thấy trận đấu"
+            viewBinding.toolbar.title = getString(R.string.message_match_not_found)
             return
         }
         val playersById = players.associateBy { it.id }
-        val p1 = playersById[match.player1Id]?.name ?: "#${match.player1Id}"
-        val p2 = playersById[match.player2Id]?.name ?: "#${match.player2Id}"
+        val p1 = playersById[match.player1Id]?.name ?: fallbackPlayerName(match.player1Id)
+        val p2 = playersById[match.player2Id]?.name ?: fallbackPlayerName(match.player2Id)
         val isFour = match.matchType == 4
         val teamA = if (isFour) {
             "$p1 + $p2"
@@ -81,12 +84,16 @@ class MatchDetailActivity : CoreActivity<ActivityMatchDetailBinding>() {
         }
         val dateText = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(match.createdAt))
 
-        viewBinding.toolbar.title = "Chi tiết trận đấu"
-        viewBinding.detailType.text = if (isFour) "Thể thức: 4 người" else "Thể thức: 2 người"
+        viewBinding.toolbar.title = getString(R.string.title_match_details)
+        viewBinding.detailType.text = getString(R.string.label_format) + " " + getString(
+            if (isFour) R.string.match_type_four_players else R.string.match_type_two_players
+        )
         viewBinding.detailTeams.text = "$teamA vs $teamB"
-        viewBinding.detailScore.text = "Kết quả: ${match.scoreTeamA} - ${match.scoreTeamB}"
-        viewBinding.detailDate.text = "Ngày thi đấu: $dateText"
+        viewBinding.detailScore.text = getString(R.string.label_result_prefix) + " " + match.scoreTeamA + " - " + match.scoreTeamB
+        viewBinding.detailDate.text = getString(R.string.label_match_date_prefix) + " " + dateText
     }
+
+    private fun fallbackPlayerName(playerId: Long): String = "#$playerId"
 
     companion object {
         const val EXTRA_MATCH_ID = "match_id"

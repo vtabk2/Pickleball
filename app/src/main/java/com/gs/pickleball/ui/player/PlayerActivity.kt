@@ -1,4 +1,4 @@
-package com.gs.pickleball.ui.player
+﻿package com.gs.pickleball.ui.player
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,7 +37,7 @@ class PlayerActivity : CoreActivity<ActivityPlayerBinding>() {
             }
             viewBinding.nameInputLayout.error = null
             viewModel.savePlayer(name)
-            viewBinding.nameInput.setText("")
+            viewBinding.nameInput.text?.clear()
         }
 
         viewBinding.playerListView.setOnItemClickListener { _, _, position, _ ->
